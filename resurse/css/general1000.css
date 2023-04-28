@@ -1,0 +1,18 @@
+body
+{
+	--margine-site1000:20px;
+	--grid-gap1000:20px;
+}
+@media screen and (min-width: 1024px)
+{	
+	body
+	{
+		font-size: 18px;
+		margin-left:var(--margine-site1000);
+		margin-right:var(--margine-site1000);
+	}
+	#grid-pagina
+	{
+		grid-gap:var(--grid-gap1000);
+	}
+}

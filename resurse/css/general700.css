@@ -1,0 +1,26 @@
+body{
+	--margine-site700:15px;
+	--grid-gap700:15px;
+}
+@media screen and (max-width: 768px) {
+	.conttable
+	{
+		overflow-x:scroll;
+	}
+	*{
+		transition:0s;
+	}
+}
+@media screen and (min-width: 768px) {
+	body
+	{
+		font-size: 17px;
+		margin-left:var(--margine-site700);
+		margin-right:var(--margine-site700);
+	}
+	
+	#grid-pagina
+	{
+		grid-gap:var(--grid-gap700);
+	}
+}

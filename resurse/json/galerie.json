@@ -1,0 +1,66 @@
+{
+	"cale_galerie":"resurse/imagini/galerie",
+	"imagini": [
+		{
+			"fisier":"final-1601.png",
+			"descriere":"BEANZ-1601",
+			"anotimp":["primavara"]
+		},
+		{
+			"fisier":"final-2993.png",
+			"descriere":"BEANZ-2993",
+			"anotimp":["primavara"]
+			
+		},
+		{
+			"fisier":"final-3058.png",
+			"descriere":"BEANZ-3058",
+			"anotimp":["primavara"]
+		},
+		{
+			"fisier":"final-3335.png",
+			"descriere":"BEANZ-3335",
+			
+			"anotimp":["iarna"]
+		},
+		{
+			"fisier":"final-10358.png",
+			"descriere":"BEANZ-10358",
+
+			"anotimp":["primavara"]
+		},
+		{
+			"fisier":"final-19828.png",
+			"descriere":"BEANZ-19828",
+
+			"anotimp":["iarna"]
+		},
+		{
+			"fisier":"final-18283.png",
+			"descriere":"BEANZ-18283",
+
+			"anotimp":["toamna"]
+		},
+		{
+			"fisier":"final-10696.png",
+			"descriere":"BEANZ-10696",
+
+			"anotimp":["vara"]
+		},
+
+		{
+			"fisier":"final-10488.png",
+			"descriere":"BEANZ-10488",
+
+			"anotimp":["vara"]
+		},
+
+		{
+			"fisier":"final-8115.png",
+			"descriere":"BEANZ-8115",
+
+			"anotimp":["vara"]
+		}
+
+	]
+}

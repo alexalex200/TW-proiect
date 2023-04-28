@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ro">    
+	<head>        
+		<title>Magazin NFT</title> 
+		
+		
+		<meta name="keywords" content="NFT,Crypto,Monede,Magazin,Blockchain,Jetoane">
+		<meta name="description" content="Magazin online pentru non-fungible token (NFT)">
+		
+
+        <%- include("../fragmente/head.ejs") %>
+	</head>    
+	<body>  
+		
+		<%- include("../fragmente/header.ejs") %>
+		<main>
+			<div id="grid-pagina">
+				<section id="welcome">
+					<button class="btn btn-primary text-success border-success ">ceva</button>
+					<button class="btn btn-secondary text-success borde-success">altceva</button>
+
+					<div class="container">
+						<div class="row">
+						  <div class="col-sm border border-primary rounded">
+							COL1
+						  </div>
+						  <div class="col-sm border border-primary rounded">
+							COL2
+						  </div>
+						  <div class="col-sm border border-primary rounded">
+							COL3
+						  </div>
+						</div>
+					</div>
+
+					<section id="NFT">
+						<p>
+							IP:<%- locals.ip%>
+						</p>
+						<article>
+							<h2>NFT</h2><i class="fa fa-star"></i>
+							<h3 id="infoNFT">Cateva informatii despre NFT:</h3>	
+							<p>	<dfn title="non-fungible token" >NFT</dfn> este o unitate de date unică dintr-un <i>registru contabil informatic</i> denumit <u style="text-decoration:none">blockchain</u>. <u style="text-decoration:none">NFT</u>-urilor le corespund fișiere de diverse formate, în funcție de natura procesului de creație: fotografii, înregistrări audio, videoclipuri etc. Deși fișierele în sine pot fi copiate, <u style="text-decoration:none">jetoanele </u> nefungibile care le sunt asociate sunt consemnate și monitorizate în permanență în registrele <u style="text-decoration:none">blockchain</u> din care fac parte, oferindu-le cumpărătorilor dovada dreptului de proprietate.</p>
+							<figure>
+							<picture>
+							 <source media="(max-width: 500px)" srcset="./resurse/imagini/nftinfo300.png" />
+							 <source media="(max-width: 1000px)" srcset="./resurse/imagini/nftinfo500.png" />
+							 <img src="/resurse/imagini/nftinfo1000.png" alt="nft"/>
+							</picture>
+							<figcaption>Fig.1 - Ex.NFT</figcaption>
+							</figure> 	
+							
+							<div id="iframe">
+								<iframe name="iframe_a" height="300" width="420" style="border:4px solid var(--culoare-border)"src="https://www.youtube.com/embed/NNQLJcJEzv0" title="Iframe Example"></iframe>
+								
+								<a href="https://www.youtube.com/embed/NNQLJcJEzv0" target="iframe_a"><button class="button">info#1</button></a>
+								<a href="https://www.youtube.com/embed/4dkl5O9LOKg" target="iframe_a"><button class="button">info#2</button></a>
+							</div>
+							<a href="/resurse/imagini/nftinfo300.png" download>
+								<img src="/resurse/imagini/nftinfo300.png" alt="NFT">
+							</a>
+							
+							<h3 id="utilizare">Utilizari:</h3> 
+							<ul>
+								<li>
+								<h4>Arta digitală</h4>
+								<u style="text-decoration:none">Arta digitală </u>a fost unul dintre primele domenii în care <u style="text-decoration:none"> NFT</u>-urile și-au dovedit utilitatea, datorită capacității tehnologiei <u style="text-decoration:none">blockchain </u> de a asigura existența unei semnături unice și dreptul de proprietate asupra <u style="text-decoration:none">NFT</u>-urilor.
+								</li>
+								<li>
+								<h4>Jocurile video</h4>
+								<u style="text-decoration:none">Jetoanele </u>nefungibile sunt folosite și pentru a reprezenta bunurile virtuale dintr-un joc care sunt controlate de utilizator și nu de creatorul jocului. Mai mult, <u style="text-decoration:none">NFT</u>-urile oferă posibilitatea tranzacționării de bunuri virtuale pe <i>piețe terțe</i> fără permisiunea creatorului jocului
+								</li>
+							</ul>
+							
+							<details><summary>Intrebare?</summary>
+							<p>da?</p>
+							</details>
+							
+							<%- include("../fragmente/galerie.ejs") %>
+
+							<a href="https://ro.wikipedia.org/wiki/Jeton_nefungibil" target="_blank">Mai multe informatii</a>
+						</article>
+					</section>
+				</section>
+					<section id="tabel">
+						<h2>Topul Colectiilor<i class="fa fa-table fa-spin"></i></h2>
+						<div class="conttable">
+						<table>
+							<caption>tabel actualizat in data: 04-03-2023</caption>
+							<colgroup>
+								<col>
+								<col>
+								<col>
+								<col>
+							</colgroup>
+								<thead>
+								  <tr>
+									<td>Rank</td>
+									<td>Colectie NFT</td>
+									<td>Trade-uri zilnice</td>
+									<td>Numar total</td>
+								  </tr>	
+								</thead>
+								<tbody>
+								  <tr>
+									<td>1</td>
+									<td>Mutant Ape Yacht Club</td>
+									<td>266</td>
+									<td>19,457</td>
+								  </tr>
+								  <tr>
+									<td>2</td>
+									<td>Bored Ape Kennel Club</td>
+									<td>443</td>
+									<td>9,602</td>
+								  </tr>
+								  <tr>
+									<td>3</td>
+									<td>Bored Ape Yacht Club</td>
+									<td>46</td>
+									<td>9,998</td>
+								  </tr>
+								  <tr>
+									<td>4</td>
+									<td>CLONE X - X TAKASHI MURAKAMI</td>
+									<td>594</td>
+									<td>19,458</td>
+								  </tr>
+								</tbody>
+								<tfoot>
+								  <tr>	
+									<td colspan="2">Suma</td>
+									<td>1,349</td>
+									<td>58,515</td>
+								  <tr>
+								</tfoot>
+						</table>
+						</div>
+					</section>
+					
+					<section id="calendarevenimente">
+						<h2>Clendar Evenimente</h2>
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum sed libero accumsan velit luctus sollicitudin et at purus. Nulla gravida sit amet odio sit amet blandit. Curabitur mauris erat, elementum vitae ex at, congue maximus dui. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque elit quam, luctus eu nisi pretium, semper volutpat mi. Etiam hendrerit porta convallis. Cras euismod, magna ut convallis sodales, lorem sapien dignissim ligula, vel pellentesque est sapien id nisl. Ut mattis erat lacus, in molestie erat dignissim sit amet. Vivamus faucibus, purus vel pretium lacinia, quam ex molestie sapien, vitae vehicula leo nisi vel turpis. Morbi in feugiat lacus, viverra consequat nibh. Aliquam augue nibh, consequat in ipsum et, molestie molestie mi.</p>
+					</section>
+					
+					<section id="anunturi">
+						<h2>Anunturi</h2>
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum sed libero accumsan velit luctus sollicitudin et at purus. Nulla gravida sit amet odio sit amet blandit. Curabitur mauris erat, elementum vitae ex at, congue maximus dui. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque elit quam, luctus eu nisi pretium, semper volutpat mi. Etiam hendrerit porta convallis. Cras euismod, magna ut convallis sodales, lorem sapien dignissim ligula, vel pellentesque est sapien id nisl. Ut mattis erat lacus, in molestie erat dignissim sit amet. Vivamus faucibus, purus vel pretium lacinia, quam ex molestie sapien, vitae vehicula leo nisi vel turpis. Morbi in feugiat lacus, viverra consequat nibh. Aliquam augue nibh, consequat in ipsum et, molestie molestie mi.</p>
+					</section>
+					
+					<section id="listautilizatori">
+						<h2>Lista Utilizatori</h2>
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum sed libero accumsan velit luctus sollicitudin et at purus. Nulla gravida sit amet odio sit amet blandit. Curabitur mauris erat, elementum vitae ex at, congue maximus dui. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque elit quam, luctus eu nisi pretium, semper volutpat mi. Etiam hendrerit porta convallis. Cras euismod, magna ut convallis sodales, lorem sapien dignissim ligula, vel pellentesque est sapien id nisl. Ut mattis erat lacus, in molestie erat dignissim sit amet. Vivamus faucibus, purus vel pretium lacinia, quam ex molestie sapien, vitae vehicula leo nisi vel turpis. Morbi in feugiat lacus, viverra consequat nibh. Aliquam augue nibh, consequat in ipsum et, molestie molestie mi.</p>
+					</section>
+					
+					<section id="statistici">
+						<h2>Statistici</h2>
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum sed libero accumsan velit luctus sollicitudin et at purus. Nulla gravida sit amet odio sit amet blandit. Curabitur mauris erat, elementum vitae ex at, congue maximus dui. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque elit quam, luctus eu nisi pretium, semper volutpat mi. Etiam hendrerit porta convallis. Cras euismod, magna ut convallis sodales, lorem sapien dignissim ligula, vel pellentesque est sapien id nisl. Ut mattis erat lacus, in molestie erat dignissim sit amet. Vivamus faucibus, purus vel pretium lacinia, quam ex molestie sapien, vitae vehicula leo nisi vel turpis. Morbi in feugiat lacus, viverra consequat nibh. Aliquam augue nibh, consequat in ipsum et, molestie molestie mi.</p>
+					</section>
+					
+					<section id="datesite-server">
+						<h2>Date site-server</h2>
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum sed libero accumsan velit luctus sollicitudin et at purus. Nulla gravida sit amet odio sit amet blandit. Curabitur mauris erat, elementum vitae ex at, congue maximus dui. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque elit quam, luctus eu nisi pretium, semper volutpat mi. Etiam hendrerit porta convallis. Cras euismod, magna ut convallis sodales, lorem sapien dignissim ligula, vel pellentesque est sapien id nisl. Ut mattis erat lacus, in molestie erat dignissim sit amet. Vivamus faucibus, purus vel pretium lacinia, quam ex molestie sapien, vitae vehicula leo nisi vel turpis. Morbi in feugiat lacus, viverra consequat nibh. Aliquam augue nibh, consequat in ipsum et, molestie molestie mi.</p>
+					</section>
+					
+					<section id="diverse">
+						<h2>Diverse</h2>
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum sed libero accumsan velit luctus sollicitudin et at purus. Nulla gravida sit amet odio sit amet blandit. Curabitur mauris erat, elementum vitae ex at, congue maximus dui. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque elit quam, luctus eu nisi pretium, semper volutpat mi. Etiam hendrerit porta convallis. Cras euismod, magna ut convallis sodales, lorem sapien dignissim ligula, vel pellentesque est sapien id nisl. Ut mattis erat lacus, in molestie erat dignissim sit amet. Vivamus faucibus, purus vel pretium lacinia, quam ex molestie sapien, vitae vehicula leo nisi vel turpis. Morbi in feugiat lacus, viverra consequat nibh. Aliquam augue nibh, consequat in ipsum et, molestie molestie mi.</p>
+					</section>
+				</div>
+		</main>
+		<%- include("../fragmente/footer.ejs") %>
+	</body>
+</html>

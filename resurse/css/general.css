@@ -1,0 +1,202 @@
+::selection{
+	background:var(--culoare-highlight);
+}
+img
+{
+	max-width:300px;
+	height:auto;
+}
+
+header
+{
+	background-color:var(--culoare-fundal2);
+	border:4px solid var(--culoare-border);
+	border-radius:10px;
+	margin-bottom:10px;
+	padding:var(--padding-pagina);
+}
+
+body{
+	--culoare-fundal:#1C1C1C;
+	--culoare-fundal2:#363636;
+	--culoare-text:#00DBD8;
+	--culoare-border:#0C7EE8;
+	--culoare-border2:#085399;
+	--culoare-highlight:#DB4F00;
+	--culoare-buton:#584845;
+	--culoare-buton2:#423634;
+	--culoare-highlight2:#ED330C;
+	--margine-site:10px;
+	--grid-gap:10px;
+	--padding-pagina:10px;
+}
+
+body
+{
+	font-size: 16px;
+	font-family: 'Tilt Warp', cursive;
+	background-color:var(--culoare-fundal);
+	color:var(--culoare-text);
+	margin-left:var(--margine-site);
+	margin-right:var(--margine-site);
+}
+
+footer
+{
+	background-color:var(--culoare-fundal2);
+	border:4px solid var(--culoare-border);
+	border-radius:10px;
+	margin-top:10px;
+	padding:var(--padding-pagina);
+}
+#iframe
+{
+	display:flex;
+	flex-direction:row-reverse;
+	flex-wrap:wrap;
+	width:430px;
+}
+
+.button
+{
+	background-color:var(--culoare-text);
+	box-shadow:0 0 4px 2px var(--culoare-border) inset;
+	border-radius :0px 0px 10px 10px;
+	border-top:4px solid var(--culoare-border);
+	border-left:4px solid var(--culoare-fundal);
+	border-right:4px solid var(--culoare-fundal);
+	border-bottom:4px solid var(--culoare-fundal);
+	
+}
+
+.button:hover
+{
+	background-color:white;
+	transition:background-color 0.7s linear;
+}
+
+#grid-pagina
+{
+	display:grid;
+	grid-template-areas: "z-welcome z-welcome z-welcome"
+						 "z-calendarevenimente z-tabel z-anunturi"
+						 "z-listautilizatori z-tabel z-anunturi"
+						 "z-listautilizatori z-statistici z-datesite-server"
+						 "z-diverse z-diverse z-diverse"
+	;
+	grid-gap:var(--grid-gap);
+}
+#tabel table,th,td{
+   border: 1px solid var(--culoare-border);
+   caption-side:bottom;
+   border-collapse:collapse;
+   overflow:hiden
+}
+
+.conttable
+{
+		border-radius: 10px; 
+		border: 1px solid var(--culoare-border);
+		overflow: hidden;
+}
+
+col:nth-child(odd)
+{
+	background-color:var(--culoare-highlight);
+}
+
+td:hover
+{
+	background-color:var(--culoare-buton2);
+}
+ 
+tr:hover
+{
+	background-color:var(--culoare-buton);
+}
+
+.buttontop
+{
+	border: 1px solid var(--culoare-highlight);
+	box-shadow: 0 0 3px 1px var(--culoare-highlight);
+	height: 25px;
+	width: 25px;
+	border-radius:50%;
+	display:flex;
+	justify-content:center;
+	position:fixed;
+	bottom:20px;
+	right:20px;
+	opacity:0.5;
+	color:var(--culoare-highlight);
+}
+
+.buttontop a
+{
+	color:var(--culoare-highlight);
+	text-decoration:none;
+}
+
+
+.buttontop .tooltiptext
+{
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  position: absolute;
+  right:25px;
+  bottom:25px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.buttontop:hover
+{
+	color:var(--culoare-highlight2);
+	background-color:var(--culoare-fundal2);
+	border:1px solid var(--culoare-highlight2);
+	box-shadow:0 0 5px 1px var(--culoare-highlight2);
+	transition:0.7s linear;
+	opacity:1;
+}
+
+.buttontop:hover .tooltiptext
+{
+	visibility: visible;
+	opacity: 1;
+}
+#grid-pagina > *
+{
+	border:2px solid var(--culoare-border2);
+	padding:var(--padding-pagina);
+}
+
+#welcome{
+    grid-area: z-welcome;
+}
+#tabel{
+    grid-area: z-tabel;
+}
+#calendarevenimente{
+    grid-area: z-calendarevenimente;
+}
+ 
+#anunturi{
+    grid-area: z-anunturi;
+}
+ 
+#listautilizatori{
+    grid-area: z-listautilizatori;
+}
+#statistici{
+    grid-area: z-statistici;
+}
+#datesite-server{
+    grid-area: z-datesite-server;
+}
+ 
+#diverse{
+    grid-area: z-diverse;
+}
