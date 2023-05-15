@@ -17,7 +17,7 @@
 		position:sticky;
 		top:0px;
   margin-left: calc(-1 * var(--spatiere-pagina));
-		z-index:1;
+		z-index:100;
 }
 
 	ul.meniu, ul.meniu ul{
