@@ -1,10 +1,14 @@
 @use '../../node_modules/bootstrap/scss/bootstrap.scss' with 
 (
-    $primary:red,
-    $secondary:purple,
+    //$primary:#000000,
+    //$secondary:#00DBD8,
     
-    $success:blue,
+    //$success:blue,
 
+    // $form-control:(
+    //     border-color:#00DBD8,
+    //     background-color:#363636,
+    // ),
     $grid-breakpoints:(
         xs: 0,
         sm: 1000px,
@@ -14,7 +18,7 @@
         xxl: 1400px,
     ),
 
-    $border-radius: 1rem,
+    $border-radius: 0.5rem,
 
     $h1-font-size: 4rem,               
     $h2-font-size: 3rem,

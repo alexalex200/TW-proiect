@@ -1,71 +1,164 @@
 <!DOCTYPE html>
 <html  lang="ro">
-    <head>
-        <meta name="description" content="Cofetaria Dulcelind ofera prajituri, torturi, produse de patiserie cu optiunea de achizitie online si livrare prin curier.">
-        <meta name="keywords" content="cofetarie, Dulcelind, prajituri, torturi, dulce, pateuri, produse">
-        <link rel="stylesheet" href="/resurse/css/produse.css" type="text/css" />
-        <title>Cofetăria Dulcelind - home</title>
-        <%- include("../fragmente/head") %>     
-        <script type="text/javascript" src=/resurse/js/produse.js></script>
+    <head>        
+		<title>Magazin NFT</title> 
+		
+		
+		<meta name="keywords" content="NFT,Crypto,Monede,Magazin,Blockchain,Jetoane">
+		<meta name="description" content="Magazin online pentru non-fungible token (NFT)">
+		
 
+        <%- include("../fragmente/head.ejs") %>   
+        <script type="text/javascript" src=/resurse/js/produse.js></script>
+        <link rel="stylesheet" href="/resurse/css/produse.css" type="text/css" />
     </head>
     <body>
     <%- include("../fragmente/header") %>
 
     <main>
-        <label> Nume: <input type="text" id="inp-nume"></label>
-        <!--<label> Maxim calorii: <input type="number" id="inp-calorii" value="10000"></label>-->
-        <div> Calorii:<!-- trebuie sa aiba acelasi name ca sa formeze un grup -->
-            <p><label>Dietetic (calorii &lt; 350)
-                <input id="i_rad1"  name="gr_rad" value="0:350" type="radio"/>
-            </label></p>
-            <p><label>Mediu (350 &le; calorii &lt; 700)
-                <input id="i_rad2"  name="gr_rad" value="350:750" type="radio"/>
-            </label>
-            <p><label>Ridicat caloric (700 &le; calorii)
-                <input id="i_rad3" name="gr_rad" value="700:1000000000" type="radio"/>
-            </label>
-            <p><label>Toate
-                <input id="i_rad4" checked name="gr_rad" value="toate" type="radio"/>
-            </label>
+        <div class="container">
+
+            <div class="row">
+            <div class="col">
+                <div class="form-floating">
+                    <input class="form-control form-control-sm " type="text" id="inp-nume" placeholder="nume">
+                    <label for="inp-text"> Nume</label>
+                </div><br>
+
+                <div class="form-floating">
+                    <textarea class="form-control form-control-sm" id="i_textarea" placeholder="textarea"rows="1" cols="25"></textarea>
+                    <label for="i_textarea">Textarea</label>
+                </div>
+
+                <%
+                var v_pret = [];
+                for(let prod of locals.produse)
+                {
+                    let sem=0;
+                    for(let i=0; i < v_pret.length ; i++)
+                    {
+                        if(v_pret[i]>parseInt(prod.pret))
+                        {
+                            sem=i;
+                            break;
+                        }
+                        if(v_pret[i]==parseInt(prod.pret))
+                        {
+                            sem=-1;
+                            break;
+                        }
+                        sem=i+1;
+                    }
+                    if(sem!=-1)
+                        v_pret.splice(sem,0,parseInt(prod.pret));  
+                }
+                %>
+    
+                <% let nr=v_pret.length/3 %>
+                <label>Select multiplu:<br>
+                    <select class="form-select" id="inp-pret" multiple size="<%nr%>">
+                        <% for (let i=0; i < v_pret.length ; i+= v_pret.length/nr) { %>
+                            <option class="form-select-option" value="<%- v_pret[i]-%>,<%- v_pret[(i+v_pret.length/nr-1)<v_pret.length?i+v_pret.length/nr-1:v_pret.length-1] -%>"><%- v_pret[i]-%>-<%- v_pret[(i+v_pret.length/nr-1)<v_pret.length?i+v_pret.length/nr-1:v_pret.length-1] -%></option>
+                        <% } %>
+                    </select>
+                </label><br>
+
+                <label>Select simplu:
+                    <select class="form-select form-select-sm"id="inp-disp">
+                        <option class="form-select-option" id="inp-disp-toate" value="toate" selected>Toate</option>
+                        <option class="form-select-option" value="Disponibil">Disponibil</option>
+                        <option class="form-select-option" value="Indisponibil">Indisponibil</option>
+                    </select>
+                </label>
+            </div>
+
+            <div class="col">
+                <lable>Categorii:</lable>
+                <div class="form-check" id="radio-categorie">
+                    <% 
+                    let i=1;
+                    for (let opt of locals.optiuni) { %>
+                        <label class="form-check-label"><input class="form-check-input" id= "<%- "i_rad" + i -%>"  name="gr_rad" value="<%- opt.unnest -%>" type="radio"/>
+                        <%- opt.unnest.charAt(0).toUpperCase() + opt.unnest.slice(1) -%>
+                        </label><br>
+                    <%  i++;
+                    } %>
+                </div>
+
+                <%
+                let min=parseInt(locals.produse[0].views);
+                let max=parseInt(locals.produse[0].views); 
+                for(var prod of locals.produse){
+                    if(parseInt(prod.views) > max){
+                        max=prod.views;
+                    }
+                    if(parseInt(prod.views) < min){
+                        min=prod.views;
+                    }
+                }%>
+
+                <label for="inp-views" class="form-label"> Views:</label><span class="range-min"><%- min -%> </span>
+                <input class="form-range" type="range" id="inp-views" value="0" min="<%- min -%>" max="<%- max -%>" step="10">
+                <span class="range-max"><%- max -%></span><span id="infoRange">(0)</span><br>
+
+                <input  class="form-check-input" type="checkbox" id="noutati" name="noutati" value="2023-06-04">
+                <label for="noutati"> Noutati</label>
+            </div>
+            
+            <div class="row">
+                <div class="col">
+                    <button id="filtrare" class="btn btn-lg"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-funnel" viewBox="0 0 16 16">
+                    <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2zm1 .5v1.308l4.372 4.858A.5.5 0 0 1 7 8.5v5.306l2-.666V8.5a.5.5 0 0 1 .128-.334L13.5 3.308V2h-11z"/>
+                    </svg>Filtreaza</button> 
+                    <button id="resetare" class="btn btn-lg"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
+                    <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
+                    <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
+                    </svg>Reseteaza</button>
+                    <span id="mesaj-reset-fata" style="display: none;">&#128529</span>
+                    <span id="mesaj-reset" style="display: none;">Esti sigur ca vrei sa resetezi ?<button id="buton_reset_da" class="btn btn-sm">DA</button><button id="buton_reset_nu" class="btn btn-sm">NU</button></span><br/>
+                    <button id="sortCrescNume" class="btn btn-lg ">Sorteaza crescator<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sort-down-alt" viewBox="0 0 16 16">
+                    <path d="M3.5 3.5a.5.5 0 0 0-1 0v8.793l-1.146-1.147a.5.5 0 0 0-.708.708l2 1.999.007.007a.497.497 0 0 0 .7-.006l2-2a.5.5 0 0 0-.707-.708L3.5 12.293V3.5zm4 .5a.5.5 0 0 1 0-1h1a.5.5 0 0 1 0 1h-1zm0 3a.5.5 0 0 1 0-1h3a.5.5 0 0 1 0 1h-3zm0 3a.5.5 0 0 1 0-1h5a.5.5 0 0 1 0 1h-5zM7 12.5a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 0-1h-7a.5.5 0 0 0-.5.5z"/>
+                    </svg></button>
+                    <button id="sortDescrescNume" class="btn btn-lg ">Sorteaza descrescator<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sort-down" viewBox="0 0 16 16">
+                    <path d="M3.5 2.5a.5.5 0 0 0-1 0v8.793l-1.146-1.147a.5.5 0 0 0-.708.708l2 1.999.007.007a.497.497 0 0 0 .7-.006l2-2a.5.5 0 0 0-.707-.708L3.5 11.293V2.5zm3.5 1a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zM7.5 6a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zm0 3a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1h-3zm0 3a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1h-1z"/>
+                    </svg></button>
+                </div>
+            </div>
         </div>
-
-
-        <label> Pret minim: <input type="range" id="inp-pret" value="0" min="0"  max="70"> <span id="infoRange">(0)</span></label>
-        <label>Select simplu:
-            <select id="inp-categorie">
-                <option id="sel-toate" selected value="toate">toate</option>
-                <% for (let opt of locals.optiuni) { %>
-                    <option value="<%- opt.unnest %>"><%- opt.unnest %> </option>
-                <% } %>
-            </select>
-        </label>
-        <p>
-        <button id="filtrare">Filtreaza</button> 
-
-        <button id="resetare">Reseteaza</button><br/>
-        <button id="sortCrescNume">Sorteaza crescator dupa pret si nume</button>
-        <button id="sortDescrescNume">Sorteaza descrescator dupa pret si nume</button>
-        
-        </p>
-        
+        </div>
         <p id="p-suma">Apăsați Alt+"c" pentru suma preturilor produselor afișate. </p>
         <section id="produse">
             <h2>Produse</h2>
+            <p id="mesaj-invalid" style="display:none">NU exista rezultate petru cautarea dumnevoastra !!</p>
             <div class="grid-produse">
-                <% for( let prod of locals.produse) { %>
-                    <article class="produs" >
+                <% for( let prod of locals.produse) { 
+                    %>
+                    <article class="produs" id= "<%-"articol_" + prod.id-%>">
                         <h3 class="nume">Nume: <a href="/produs/<%-prod.id %>" ><span class="val-nume"><%- prod.nume%></span></a></h3>
+                        <p class="categorie">Categorie: <span class="val-categorie"><%- ' '+prod.categ[0].toUpperCase() +  prod.categ.split(prod.categ[0])[1]%></span></p>
+                        <p style="display:none;"><span class="id"><%- prod.id %> </span></p>
+                        <figure>
+                            <a href="/produs/<%-prod.id %>" ><img src="/resurse/imagini/galerie/<%- prod.imagine %>" style="width:50%;height:auto;" alt="[imagine <%- prod.nume %>]" /></a>
+                        </figure>
                         <div class="info-prod">
                             <p class="pret">Pret: <span class="val-pret"><%- prod.pret%></span></p>
-                            <p class="calorii">Calorii: <span class="val-calorii"><%- prod.calorii%></span></p>
-                            <p class="gramaj">Gramaj: <span class="val-gramaj"><%- prod.gramaj%></span></p>
+                            <p class="views">Views: <span class="val-views"><%- prod.views%></span></p><br>
                         </div>
-                        <p class="categorie">Categorie:<span class="val-categorie"><%- prod.categorie%></span></p>
-                        <figure>
-                            <a href="/produs/<%-prod.id %>" ><img src="/resurse/imagini/produse/<%- prod.imagine %>" style="width:50%;height:auto;" alt="[imagine <%- prod.nume %>]" /></a>
-                        </figure>
-                        <label class="selecteaza-cos">
+                        
+                        <%
+                        let rasp_disp="";
+                        if(prod.disponibilitate)
+                            rasp_disp="\<span class=\"disp\"> Disponibil \</span>";
+                        else
+                            rasp_disp="\<span class=\"indisp\"> Indisponibil \</span>";
+                        %>
+
+                        <p class="disponibilitate"> <%- rasp_disp %> </p>
+
+                        <p style="display:none;"><span class="disponibilitate"><%- prod.disponibilitate -%> </span></p>
+                        <p style="display:none;"><span class="data_adaugare"><%- prod.data_adaugare -%> </span></p>
+                        <p style="display:none;"><span class="elemente_nft"><%- prod.elemente_nft -%> </span></p>
+                        <label class="selecteaza-cos" style="display:none">
                             Selectează:<br/>
                             <input type="checkbox" class="select-cos" value="<%-prod.id %>" autocomplete="off">
                         </label>

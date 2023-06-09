@@ -4,6 +4,17 @@ const path=require('path');
 const sharp=require('sharp');
 const sass=require('sass');
 const {Client}=require('pg'); 
+const AccesBD= require("./module_proprii/accesbd.js");
+ 
+AccesBD.getInstanta().select(
+    {tabel:"nft_produse",
+    campuri:["nume", "pret", "views"],
+    conditiiAnd:["pret>7"]},
+    function (err, rez){
+        console.log(err);
+        console.log(rez);
+    }
+)
 
 let u="admin01";
 let p="Admin01pa55"
@@ -13,18 +24,20 @@ var client= new Client({database:"nft",
         host:"localhost",
         port:5432});
 client.connect();
-client.query("SELECT * FROM lab8_16",function(err,rez){
-	console.log("eroare:",err);
-	console.log("rezultat:",rez);
-});
 
-client.query("select * from unnest(enum_range(null::tipuri_produse))",function(err,rezCategorie){
+// client.query("SELECT * FROM lab8_16",function(err,rez){
+// 	console.log("eroare:",err);
+// 	console.log("rezultat:",rez);
+// });
+
+client.query("select * from unnest(enum_range(null::colectie))",function(err,rezCategorie){
 	if(err)
 	{
 		console.log(err);
 	}
 	else{
 		obGlobal.optiuniMeniu=rezCategorie.rows;
+		console.log(obGlobal.optiuniMeniu);
 	}
 });
 
@@ -150,7 +163,7 @@ app.get("/produse",function(req, res){
     //TO DO se adauaga filtrarea dupa tipul produsului
     //TO DO se selecteaza si toate valorile din enum-ul categ_prajitura
 
-	client.query("select * from unnest(enum_range(null::categ_prajitura))",function(err,rezCategorie){
+	client.query("select * from unnest(enum_range(null::categ_culori_nft))",function(err,rezCategorie){
 		if(err)
 		{
 			console.log(err);
@@ -158,16 +171,17 @@ app.get("/produse",function(req, res){
 		else{
 			let conditionWhere="";
 			if(req.query.tip)
-				conditionWhere=` where tip_produs='${req.query.tip}'`;
-				client.query("select * from prajituri"+conditionWhere , function( err, rez){
+				conditionWhere=` where colectii='${req.query.tip}'`;
+				
+			client.query("select * from nft_produse"+conditionWhere , function( err, rez){
 					console.log(300)
 					if(err){
 						console.log(err);
-						afisareEroare(res, 2);
+						afiseazaEroarea(res, 2);
 					}
 					else
 						res.render("pagini/produse", {produse:rez.rows , optiuni:rezCategorie.rows});
-				});
+			});
 		}
 	});
 
@@ -177,7 +191,7 @@ app.get("/produse",function(req, res){
 app.get("/produs/:id",function(req, res){
     console.log(req.params);
    
-    client.query(`select * from prajituri where id=${req.params.id}`, function( err, rezultat){
+    client.query(`select * from nft_produse where id=${req.params.id}`, function( err, rezultat){
         if(err){
             console.log(err);
             afisareEroare(res, 2);

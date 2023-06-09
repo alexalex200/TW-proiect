@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html  lang="ro">
-    <head>
-        <meta name="description" content="Cofetaria Dulcelind ofera prajituri, torturi, produse de patiserie cu optiunea de achizitie online si livrare prin curier.">
-        <meta name="keywords" content="cofetarie, Dulcelind, prajituri, torturi, dulce, pateuri, produse">
-        
-        <title>Cofetăria Dulcelind - home</title>
-        <%- include("../fragmente/head") %>     
+    <head>        
+		<title>Magazin NFT</title> 
+		
+		
+		<meta name="keywords" content="NFT,Crypto,Monede,Magazin,Blockchain,Jetoane">
+		<meta name="description" content="Magazin online pentru non-fungible token (NFT)">
+		
+
+        <%- include("../fragmente/head.ejs") %>    
         <link href="/resurse/css/produs.css" type="text/css" rel="stylesheet" />
+
     </head>
     <body>
     <%- include("../fragmente/header") %>
@@ -15,20 +19,37 @@
         <section>
             <h2>Pagină produs</h2>
                 <article id="art-produs">
-                    <h3><span class="nume"><%- locals.prod.nume %></span></h3>
-                    <p>Pret: <span class="pret"><%- locals.prod.pret %> </span></p>
-                    <p>Descriere: <span class="descriere"><%- locals.prod.descriere %> </span></p>
-                    <p>Ingrediente: <span class="ingrediente"><%- locals.prod.ingrediente %> </span></p>
-                    <p>Calorii: <span class="calorii"><%- locals.prod.calorii %> </span></p>
-                    <p>Gramaj: <span class="gramaj"><%- locals.prod.gramaj %> </span></p>
-                    <p>Categorie: <span class="categorie"><%- locals.prod.categorie %> </span></p>
-                    <p>Pentru diabetici: <span class="pt_diabetici"><%- locals.prod.pt_diabetici %> </span></p>
-                    <p>Data adăugare: <span class="categorie"><%- locals.prod.data_adaugare %> </span></p>
-                    <figure class="imag-produs">
-                        <img  src="/resurse/imagini/produse/<%- locals.prod.imagine %>" alt="[imagine <%- locals.prod.nume %>]" />
-                    </figure>    
-                </article>
-            
+                    <div class="produs">
+
+                        <div id="gr1">
+                            <h3><span class="nume" class="nume"><%- locals.prod.nume %></span></h3>
+                            <p>Categorie: <span class="categorie"><%- locals.prod.categ%> </span></p>
+                        </div>    
+
+                        <div id="gr2">
+                            <p>Descriere: <span class="descriere"><%- locals.prod.descriere %> </span></p>
+                        </div>
+
+                        <div id="gr3">
+                            <figure class="imag-produs">
+                                <img  src="/resurse/imagini/galerie/<%- locals.prod.imagine %>" alt="[imagine <%- locals.prod.nume %>]" />
+                            </figure>
+                        </div>
+
+                        <div id="gr4">
+                            <p>Pret: <span class="pret"><%- locals.prod.pret %> </span></p>
+                            <p>Views: <span class="views"><%- locals.prod.views %> </span></p>
+                            <p>Caracteristici: <span class="elemente_nft"><%- locals.prod.elemente_nft %> </span></p>
+                            <%
+                            let raspuns="disponibil";
+                            if(!locals.prod.disponibilitate)
+                                raspuns="indisponibil"; 
+                            %>
+                            <p>Disponibilitate: <span class="disponibilitate"><%- raspuns %> </span></p>
+                            <p>Data adăugare: <span class="data_adaugare"><%- new Date(prod.data_adaugare).toLocaleDateString('ro-RO', {weekday:'long',day: 'numeric', month: 'long', year: 'numeric'}) %> </span></p></article>
+                        </div>
+
+                     </div>
         </section>
     </main>
 
