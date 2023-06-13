@@ -5,6 +5,11 @@ const sharp=require('sharp');
 const sass=require('sass');
 const {Client}=require('pg'); 
 const AccesBD= require("./module_proprii/accesbd.js");
+
+const formidable=require("formidable");
+const {Utilizator}=require("./module_proprii/utilizator.js")
+const session=require('express-session');
+const Drepturi = require("./module_proprii/drepturi.js");
  
 AccesBD.getInstanta().select(
     {tabel:"nft_produse",
@@ -52,9 +57,9 @@ obGlobal=
 }
 app=express();
  
-console.log("Folder proiect:", __dirname);
-console.log("Cale fisier:", __filename);
-console.log("Director de lucru:",process.cwd());
+// console.log("Folder proiect:", __dirname);
+// console.log("Cale fisier:", __filename);
+// console.log("Director de lucru:",process.cwd());
 
 vectorFoldere=["temp","temp1","backup"];
 
@@ -111,7 +116,7 @@ for(let numeFis of vFisiere)
 }
 
 fs.watch(obGlobal.folderScss,function(eveniment,numeFis){
-	console.log(eveniment,numeFis);
+	//console.log(eveniment,numeFis);
 	if(eveniment=="change"||eveniment=="rename")
 	{
 		let caleCompleta=path.join(obGlobal.folderScss,numeFis);
@@ -189,8 +194,6 @@ app.get("/produse",function(req, res){
 
 
 app.get("/produs/:id",function(req, res){
-    console.log(req.params);
-   
     client.query(`select * from nft_produse where id=${req.params.id}`, function( err, rezultat){
         if(err){
             console.log(err);
@@ -308,7 +311,88 @@ function afiseazaEroarea(res,{_identificator,_titlu,_text,_imagine}={})
 	}
 }
 
+//Utilizator
 
+app.post("/inregistrare",function(req, res){
+    var username;
+    var poza;
+    var formular= new formidable.IncomingForm()
+    formular.parse(req, function(err, campuriText, campuriFisier ){//4
+        console.log("Inregistrare:",campuriText);
+
+        console.log(campuriFisier);
+        console.log(poza, username);
+        var eroare="";
+
+        var utilizNou=new Utilizator();
+        try{
+            utilizNou.setareNume=campuriText.nume;
+            utilizNou.setareUsername=campuriText.username;
+            utilizNou.email=campuriText.email
+            utilizNou.prenume=campuriText.prenume
+            
+            utilizNou.parola=campuriText.parola;
+            utilizNou.culoare_chat=campuriText.culoare_chat;
+            utilizNou.poza= poza;
+            Utilizator.getUtilizDupaUsername(campuriText.username, {}, function(u, parametru ,eroareUser ){
+                if (eroareUser==-1){//nu exista username-ul in BD
+                    utilizNou.salvareUtilizator();
+                }
+                else{
+                    eroare+="Mai exista username-ul";
+                }
+
+                if(!eroare){
+                    res.render("pagini/inregistrare", {raspuns:"Inregistrare cu succes!"})
+                    
+                }
+                else
+                    res.render("pagini/inregistrare", {err: "Eroare: "+eroare});
+            })
+            
+
+        }
+        catch(e){ 
+            console.log(e);
+            eroare+= "Eroare site; reveniti mai tarziu";
+            console.log(eroare);
+            res.render("pagini/inregistrare", {err: "Eroare: "+eroare})
+        }
+    
+
+
+
+    });
+    formular.on("field", function(nume,val){  // 1 
+	
+        console.log(`--- ${nume}=${val}`);
+		
+        if(nume=="username")
+            username=val;
+    }) 
+    formular.on("fileBegin", function(nume,fisier){ //2
+        console.log("fileBegin");
+		
+        console.log(nume,fisier);
+		//TO DO in folderul poze_uploadate facem folder cu numele utilizatorului
+        let folderUser=path.join(__dirname, "poze_uploadate",username);
+        //folderUser=__dirname+"/poze_uploadate/"+username
+        console.log(folderUser);
+        if (!fs.existsSync(folderUser))
+            fs.mkdirSync(folderUser);
+        
+        fisier.filepath=path.join(folderUser, fisier.originalFilename)
+        poza=fisier.originalFilename;
+        //fisier.filepath=folderUser+"/"+fisier.originalFilename
+        console.log("fileBegin:",poza)
+        console.log("fileBegin, fisier:",fisier)
+
+    })    
+    formular.on("file", function(nume,fisier){//3
+        console.log("file");
+        console.log(nume,fisier);
+    }); 
+});
 app.listen(8080);
  
 console.log("Serverul a pornit!")

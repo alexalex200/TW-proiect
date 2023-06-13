@@ -8,7 +8,8 @@
 		<meta name="description" content="Magazin online pentru non-fungible token (NFT)">
 		
 
-        <%- include("../fragmente/head.ejs") %>    
+        <%- include("../fragmente/head.ejs") %> 
+        <script type="text/javascript" src=/resurse/js/produs.js></script>   
         <link href="/resurse/css/produs.css" type="text/css" rel="stylesheet" />
 
     </head>
@@ -22,12 +23,24 @@
                     <div class="produs">
 
                         <div id="gr1">
+                            <span id="id" style="display: none;"> <%- locals.prod.id -%></span>
                             <h3><span class="nume" class="nume"><%- locals.prod.nume %></span></h3>
                             <p>Categorie: <span class="categorie"><%- locals.prod.categ%> </span></p>
                         </div>    
 
                         <div id="gr2">
-                            <p>Descriere: <span class="descriere"><%- locals.prod.descriere %> </span></p>
+                            <div class="accordion" id="accordionExample">
+                                <div class="accordion-item">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                      Descriere
+                                    </button>
+                                  <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        <%- locals.prod.descriere %>
+                                    </div>
+                                  </div>
+                                </div>
+                            </div>
                         </div>
 
                         <div id="gr3">

@@ -13,7 +13,7 @@
         <link rel="stylesheet" href="/resurse/css/produse.css" type="text/css" />
     </head>
     <body>
-    <%- include("../fragmente/header") %>
+    <%- include("../fragmente/header.ejs") %>
 
     <main>
         <div class="container">
@@ -127,6 +127,9 @@
         </div>
         </div>
         <p id="p-suma">Apăsați Alt+"c" pentru suma preturilor produselor afișate. </p>
+
+        <span id="ultimul-produs"></span>
+
         <section id="produse">
             <h2>Produse</h2>
             <p id="mesaj-invalid" style="display:none">NU exista rezultate petru cautarea dumnevoastra !!</p>
@@ -134,7 +137,7 @@
                 <% for( let prod of locals.produse) { 
                     %>
                     <article class="produs" id= "<%-"articol_" + prod.id-%>">
-                        <h3 class="nume">Nume: <a href="/produs/<%-prod.id %>" ><span class="val-nume"><%- prod.nume%></span></a></h3>
+                        <h3 class="nume">Nume: <a class="link-produs" href="/produs/<%-prod.id %>" ><span class="val-nume"><%- prod.nume%></span></a></h3>
                         <p class="categorie">Categorie: <span class="val-categorie"><%- ' '+prod.categ[0].toUpperCase() +  prod.categ.split(prod.categ[0])[1]%></span></p>
                         <p style="display:none;"><span class="id"><%- prod.id %> </span></p>
                         <figure>

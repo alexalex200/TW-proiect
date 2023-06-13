@@ -166,7 +166,6 @@ window.onload=function() {
 
     function sortare (semn){
         var produse=document.getElementsByClassName("produs");
-        console.log(produse[0]);
         var v_produse= Array.from(produse);
         v_produse.sort(function (a,b){
             let pret_a=parseFloat(a.getElementsByClassName("val-pret")[0].innerHTML);
@@ -178,12 +177,9 @@ window.onload=function() {
             }
             return semn*(pret_a-pret_b);
         });
-        console.log(v_produse[0]);
-        console.log(produse[0]);
         for(let prod of v_produse){
             prod.parentElement.appendChild(prod);
         }
-        console.log(produse[0]);
     }
 
     function sortare_reset (){
@@ -209,7 +205,6 @@ window.onload=function() {
     {
         if(e.key=="c" && e.altKey)
         {
-            console.log("asd");
             if(document.getElementById("info-suma"))
                 return;
             var produse=document.getElementsByClassName("produs");
@@ -235,5 +230,9 @@ window.onload=function() {
                     info.remove();
             },1000)
         }
+    }
+
+    if(document.cookie.includes("ultimul-produs")){
+        document.getElementById("ultimul-produs").innerHTML="<a href="+document.cookie.split("ultimul-produs=")[1].split(" ")[0] +">Ultimul Produs Accesat</a>";
     }
 }
