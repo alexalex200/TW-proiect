@@ -1,15 +1,18 @@
+<h2><a href="/galerie">Galerie</a></h2>
+
 <div id="grid-galerie">
     <% let i=0; 
     for (let imag of locals.imagini) {
         d=new Date();
         var v_anotimpuri=["iarna","primavara","vara","toamna"];
-        if(imag.anotimp && imag.anotimp.includes(v_anotimpuri[Math.floor(((d.getMonth()+1)%12)/3)]) && i<=10) {
+        if(locals.title=="galerie" || imag.anotimp && imag.anotimp.includes(v_anotimpuri[Math.floor(((d.getMonth()+1)%12)/3)]) && i<=10) {
             i=i+1;
         %>
             <section id="<%-"imagine-galerie"+i%>">
             <figure>
                 <figcaption><%- imag.descriere %></figcaption>
                 <picture>
+                    <source srcset="<%- imag.fisier_mic %>" media="(max-width:500px)" />
                     <source srcset="<%- imag.fisier_mediu %>" media="(max-width:1000px)" />
                     <img src="<%- imag.fisier %>" alt="imagine">
                 </picture>

@@ -41,6 +41,11 @@ button
 {
     margin-top: 10px;
 }
+
+.sortare-chei
+{
+    margin-left: 10px;
+}
 .form-floating > label
 {
     width: 25%;
@@ -101,7 +106,7 @@ svg{
 .grid-produse .produs{
     border-radius: 2rem;
     box-shadow: 0px 0px 0.8rem 0.3rem black;
-    overflow: hidden;
+    /* overflow: hidden; */
     margin: 20px;
 }
 
@@ -166,4 +171,34 @@ svg{
     background-color: var(--cl-marcare);
     
     border:1px solid  var(--culoare-mov);
+}
+
+.buton_filtre{
+    position: relative;
+}
+
+.eticheta_filtre
+{
+    visibility: hidden;
+    background-color: black;
+    color:white;
+    opacity: 0;
+    border-radius: 0.5rem;
+    z-index: 10 !important;
+    position: absolute;
+    top:30px;
+    transition: opacity 0.5s linear;
+    width: 150px;
+}
+
+.buton_filtre:hover .eticheta_filtre
+{
+    visibility: visible;
+    opacity: 0.5;
+}
+
+.produs_fixat
+{
+    background-color: var(--culoare-text) !important;
+    color: var(--culoare-fundal2) !important;
 }

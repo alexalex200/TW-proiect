@@ -31,13 +31,11 @@ function deleteAllCookies()
 
 window.addEventListener("load", function(){
 
-    console.log(document.cookie);
-
     if(document.URL.includes("/produs/"))
     {
         if(getCookie("ultimul-produs"))
             deleteCookie('ultimul-produs');
-        setCookie("ultimul-produs",document.URL);
+        setCookie("ultimul-produs",document.URL,600000);
     }
     if (getCookie("acceptat_banner")){
         document.getElementById("banner-cookie").style.display="none";

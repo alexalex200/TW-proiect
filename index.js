@@ -61,7 +61,7 @@ app=express();
 // console.log("Cale fisier:", __filename);
 // console.log("Director de lucru:",process.cwd());
 
-vectorFoldere=["temp","temp1","backup"];
+vectorFoldere=["temp","temp1","backup","poze_uploadate"];
 
 for(let folder of vectorFoldere)
 {
@@ -153,163 +153,8 @@ app.get("/ceva", function(req, res){
 	});
 
 app.get(["/index","/","/home"], function(req, res){
-    res.render("pagini/index",{ip:req.ip,imagini:obGlobal.obImagini.imagini});
+    res.render("pagini/index",{ip:req.ip,imagini:obGlobal.obImagini.imagini, title:"index",obiecte: { c: {b: 10, a:20 }, b:10,  a :[ 10, {b:10,a:20}]}});
 });
-
-app.get("/*.ejs",function(req,res) 
-{
-	afiseazaEroarea(res,{_identificator:400});	
-});
-
-app.get("/produse",function(req, res){
-
-
-    //TO DO query pentru a selecta toate produsele
-    //TO DO se adauaga filtrarea dupa tipul produsului
-    //TO DO se selecteaza si toate valorile din enum-ul categ_prajitura
-
-	client.query("select * from unnest(enum_range(null::categ_culori_nft))",function(err,rezCategorie){
-		if(err)
-		{
-			console.log(err);
-		}
-		else{
-			let conditionWhere="";
-			if(req.query.tip)
-				conditionWhere=` where colectii='${req.query.tip}'`;
-				
-			client.query("select * from nft_produse"+conditionWhere , function( err, rez){
-					console.log(300)
-					if(err){
-						console.log(err);
-						afiseazaEroarea(res, 2);
-					}
-					else
-						res.render("pagini/produse", {produse:rez.rows , optiuni:rezCategorie.rows});
-			});
-		}
-	});
-
-});
-
-
-app.get("/produs/:id",function(req, res){
-    client.query(`select * from nft_produse where id=${req.params.id}`, function( err, rezultat){
-        if(err){
-            console.log(err);
-            afisareEroare(res, 2);
-        }
-        else
-            res.render("pagini/produs", {prod:rezultat.rows[0]});
-    });
-});
-app.get("/*",function(req,res)
-{
-	try{
-		console.log(req.url);
-		res.render("pagini"+req.url,function(err,rezRandare){
-			if(err)
-			{
-				console.log(err);
-				if(err.message.startsWith("Failed to lookup view")){
-					afiseazaEroarea(res,{_identificator:404});
-				}
-				else
-				{
-					afiseazaEroarea(res);
-				}
-					
-			}
-			else
-			{
-				console.log(rezRandare);
-				res.send(rezRandare);
-			}
-		});
-	}
-	catch(err)
-	{
-		if(err.message.startsWith(" Cannot find module")){
-			afiseazaEroarea(res,{_identificator:404, _titlu:"ceva"});
-		}
-		else
-		{
-			afiseazaEroarea(res);
-		}
-	}
-});
-
-function initializeazaErori()
-{
-	var continut=fs.readFileSync(__dirname+"/resurse/json/erori.json").toString("utf-8");
-	console.log(continut);
-	obGlobal.obErori= JSON.parse(continut);
-	let vErori=obGlobal.obErori.info_erori;
-		
-	for(let eroare of vErori)
-	{
-		eroare.imagine="/"+obGlobal.obErori.cale_baza+"/"+eroare.imagine;
-		console.log(eroare.imagine);
-	}	
-		
-}	
-initializeazaErori();
-
-function initializeazaImagini()
-{
-	var continut=fs.readFileSync(__dirname+"/resurse/json/galerie.json").toString("utf-8");
-	
-	obGlobal.obImagini= JSON.parse(continut);
-	let vImagini=obGlobal.obImagini.imagini;
-	
-	let caleAbs=path.join(__dirname,obGlobal.obImagini.cale_galerie);
-	let caleAbsMediu=path.join(__dirname,obGlobal.obImagini.cale_galerie,"Mediu");
-
-	if(!fs.existsSync(caleAbsMediu))
-	{
-		fs.mkdirSync(caleAbsMediu);
-	}
-
-	for(let imag of vImagini)
-	{
-		[numeFis,ext]=imag.fisier.split(".");
-		let caleFisAbs=path.join(caleAbs,imag.fisier);
-		let caleFisMediuAbs=path.join(caleAbsMediu,numeFis+".webp");
-
-		sharp(caleFisAbs).resize(400).toFile(caleFisMediuAbs);
-
-		imag.fisier_mediu=path.join("/",obGlobal.obImagini.cale_galerie,"mediu",numeFis+".webp");
-		imag.fisier=path.join("/",obGlobal.obImagini.cale_galerie,imag.fisier);
-		//eroare.imagine="/"+obGlobal.obErori.cale_baza+"/"+eroare.imagine;
-	}	
-		
-}	
-
-initializeazaImagini();
-
-function afiseazaEroarea(res,{_identificator,_titlu,_text,_imagine}={})
-{
-	console.log(_identificator);
-	let vErori=obGlobal.obErori.info_erori;
-	let eroare=vErori.find( elem => elem.identificator==_identificator);
-	console.log(eroare)
-	if(eroare)
-	{
-		let titlu1= _titlu=="titlu default" ? (eroare.titlu || _titlu):_titlu;
-		let text1= _text || eroare.text;
-		let imagine1= _imagine || eroare.imagine;
-		if(eroare.status)
-			res.status(eroare.identificator).render("pagini/eroare",{titlu:titlu1,text:text1,imagine:imagine1});
-		else
-			res.render("pagini/eroare",{titlu:titlu1,text:text1,imagine:imagine1});
-	}
-	else
-	{
-		var errDef=obGlobal.obErori.eroare_default;
-		
-		res.render("pagini/eroare",{titlu:errDef.titlu,text:errDef.text,imagine:errDef.imagine});
-	}
-}
 
 //Utilizator
 
@@ -392,7 +237,212 @@ app.post("/inregistrare",function(req, res){
         console.log("file");
         console.log(nume,fisier);
     }); 
+
 });
+
+//http://${Utilizator.numeDomeniu}/cod/${utiliz.username}/${token}
+app.get("/cod/:username/:token",function(req,res){
+	console.log(req.params);
+	try {
+		Utilizator.getUtilizDupaUsername(req.params.username,{res:res,token:req.params.token} ,function(u,obparam){
+			AccesBD.getInstanta().update(
+				{tabel:"utilizatori",
+				campuri:{confirmat_mail:'true'}, 
+				conditiiAnd:[`cod='${obparam.token}'`]}, 
+				function (err, rezUpdate){
+					if(err || rezUpdate.rowCount==0){
+						console.log("Cod:", err);
+						afisareEroare(res,3);
+					}
+					else{
+						res.render("pagini/confirmare.ejs");
+					}
+				})
+		})
+	}
+	catch (e){
+		console.log(e);
+		renderError(res,2);
+	}
+})
+
+//app.get("/delogare",function(request,response){ request.session.destroy();});
+
+//app.get("/delogare",function(request,response){ let f=request["session"].destroy; f();});
+
+//app.post("/delogare",function(request,response){ request.session.destroy();});
+
+app.get("/delogare",function(request,response){ response.session.destroy();});
+
+app.get("/*.ejs",function(req,res) 
+{
+	afiseazaEroarea(res,{_identificator:400});	
+});
+
+app.get("/produse",function(req, res){
+
+
+    //TO DO query pentru a selecta toate produsele
+    //TO DO se adauaga filtrarea dupa tipul produsului
+    //TO DO se selecteaza si toate valorile din enum-ul categ_prajitura
+
+	client.query("select * from unnest(enum_range(null::categ_culori_nft))",function(err,rezCategorie){
+		if(err)
+		{
+			console.log(err);
+		}
+		else{
+			let conditionWhere="";
+			if(req.query.tip)
+				conditionWhere=` where colectii='${req.query.tip}'`;
+				
+			client.query("select * from nft_produse"+conditionWhere , function( err, rez){
+					console.log(300)
+					if(err){
+						console.log(err);
+						afiseazaEroarea(res, 2);
+					}
+					else
+						res.render("pagini/produse", {produse:rez.rows , optiuni:rezCategorie.rows});
+			});
+		}
+	});
+
+});
+
+app.get("/galerie", function(req,res)
+{
+	res.render("pagini/galerie",{imagini:obGlobal.obImagini.imagini,title:"galerie"});
+})
+app.get("/produs/:id",function(req, res){
+    client.query(`select * from nft_produse where id=${req.params.id}`, function( err, rezultat){
+        if(err){
+            console.log(err);
+            afisareEroare(res, 2);
+        }
+        else
+            res.render("pagini/produs", {prod:rezultat.rows[0]});
+    });
+});
+app.get("/*",function(req,res)
+{
+	try{
+		//console.log(req.url);
+		res.render("pagini"+req.url,function(err,rezRandare){
+			if(err)
+			{
+				//console.log(err);
+				if(err.message.startsWith("Failed to lookup view")){
+					afiseazaEroarea(res,{_identificator:404});
+				}
+				else
+				{
+					afiseazaEroarea(res);
+				}
+					
+			}
+			else
+			{
+				//console.log(rezRandare);
+				res.send(rezRandare);
+			}
+		});
+	}
+	catch(err)
+	{
+		if(err.message.startsWith(" Cannot find module")){
+			afiseazaEroarea(res,{_identificator:404, _titlu:"ceva"});
+		}
+		else
+		{
+			afiseazaEroarea(res);
+		}
+	}
+});
+
+function initializeazaErori()
+{
+	var continut=fs.readFileSync(__dirname+"/resurse/json/erori.json").toString("utf-8");
+	//console.log(continut);
+	obGlobal.obErori= JSON.parse(continut);
+	let vErori=obGlobal.obErori.info_erori;
+		
+	for(let eroare of vErori)
+	{
+		eroare.imagine="/"+obGlobal.obErori.cale_baza+"/"+eroare.imagine;
+		//console.log(eroare.imagine);
+	}	
+		
+}	
+initializeazaErori();
+
+function initializeazaImagini()
+{
+	var continut=fs.readFileSync(__dirname+"/resurse/json/galerie.json").toString("utf-8");
+	
+	obGlobal.obImagini= JSON.parse(continut);
+	let vImagini=obGlobal.obImagini.imagini;
+	
+	let caleAbs=path.join(__dirname,obGlobal.obImagini.cale_galerie);
+	let caleAbsMediu=path.join(__dirname,obGlobal.obImagini.cale_galerie,"Mediu");
+	let caleAbsMic=path.join(__dirname,obGlobal.obImagini.cale_galerie,"Mic");
+
+	if(!fs.existsSync(caleAbsMediu))
+	{
+		fs.mkdirSync(caleAbsMediu);
+	}
+
+	if(!fs.existsSync(caleAbsMic))
+	{
+		fs.mkdirSync(caleAbsMic);
+	}
+
+	for(let imag of vImagini)
+	{
+		[numeFis,ext]=imag.fisier.split(".");
+		let caleFisAbs=path.join(caleAbs,imag.fisier);
+		let caleFisMediuAbs=path.join(caleAbsMediu,numeFis+".webp");
+		let caleFisMicAbs=path.join(caleAbsMic,numeFis+".webp");
+
+		sharp(caleFisAbs).resize(400).toFile(caleFisMediuAbs);
+
+		imag.fisier_mediu=path.join("/",obGlobal.obImagini.cale_galerie,"mediu",numeFis+".webp");
+
+		sharp(caleFisAbs).resize(250).toFile(caleFisMicAbs);
+		imag.fisier_mic=path.join("/",obGlobal.obImagini.cale_galerie,"mic",numeFis+".webp");
+		
+		imag.fisier=path.join("/",obGlobal.obImagini.cale_galerie,imag.fisier);
+		//eroare.imagine="/"+obGlobal.obErori.cale_baza+"/"+eroare.imagine;
+	}	
+		
+}	
+
+initializeazaImagini();
+
+function afiseazaEroarea(res,{_identificator,_titlu,_text,_imagine}={})
+{
+	//console.log(_identificator);
+	let vErori=obGlobal.obErori.info_erori;
+	let eroare=vErori.find( elem => elem.identificator==_identificator);
+	//console.log(eroare)
+	if(eroare)
+	{
+		let titlu1= _titlu=="titlu default" ? (eroare.titlu || _titlu):_titlu;
+		let text1= _text || eroare.text;
+		let imagine1= _imagine || eroare.imagine;
+		if(eroare.status)
+			res.status(eroare.identificator).render("pagini/eroare",{titlu:titlu1,text:text1,imagine:imagine1});
+		else
+			res.render("pagini/eroare",{titlu:titlu1,text:text1,imagine:imagine1});
+	}
+	else
+	{
+		var errDef=obGlobal.obErori.eroare_default;
+		
+		res.render("pagini/eroare",{titlu:errDef.titlu,text:errDef.text,imagine:errDef.imagine});
+	}
+}
+
 app.listen(8080);
  
 console.log("Serverul a pornit!")

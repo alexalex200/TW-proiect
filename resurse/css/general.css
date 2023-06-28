@@ -403,4 +403,11 @@ tr:hover
 		height: 25vw;
 		opacity: 0.75;
 	}
-  }
+
+
+}
+
+#paragraf_frumos+#paragraf_urat:hover
+{
+	color:blue;
+}

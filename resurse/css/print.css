@@ -5,10 +5,10 @@
 	}
 	
 	body{
-		color:black;
+		color:black !important;
 	}
 	
-	.banner{
+	#banner{
 		position:absolute;
 		display:inline-block;
 		top:0;

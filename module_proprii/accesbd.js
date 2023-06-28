@@ -143,11 +143,11 @@ class AccesBD{
         }
         */
        
-        console.log("-------------------------------------------")
-        console.log(Object.keys(campuri).join(","));
-        console.log(Object.values(campuri).join(","));
+        //console.log("-------------------------------------------")
+        //console.log(Object.keys(campuri).join(","));
+        //console.log(Object.values(campuri).join(","));
         let comanda=`insert into ${tabel}(${Object.keys(campuri).join(",")}) values ( ${Object.values(campuri).map((x) => `'${x}'`).join(",")})`;
-        console.log(comanda);
+        //console.log(comanda);
         this.client.query(comanda,callback)
     }
 
@@ -179,7 +179,7 @@ class AccesBD{
         if(conditiiAnd.length>0)
             conditieWhere=`where ${conditiiAnd.join(" and ")}`;
         let comanda=`update ${tabel} set ${campuriActualizate.join(", ")}  ${conditieWhere}`;
-        console.log(comanda);
+        //console.log(comanda);
         this.client.query(comanda,callback)
     }
 
